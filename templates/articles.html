@@ -1,0 +1,62 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<div class="row">
+<div class="col-lg-8">
+<h1>Makaleler</h1>
+<hr>
+</div>
+</div>
+<form>
+    <input type="text" name="keyword" class="input-sm" maxlength="64" placeholder="Ara">
+<button type="submit" class="btn btn-secondary btn-sm">Ara</button>
+</form>
+<br>
+{% if articles %}
+
+{% for article in articles  %}
+ <div class="row">
+                <div class="col-lg-8">
+                    <!-- Post content-->
+                    <article>
+                        <!-- Post header-->
+                        <header class="mb-4">
+                            <!-- Post title-->
+                            <a href="{% url 'article:detail' article.id %}"><h2 class="fw-bolder mb-1">{{article.title}}</h2></a>
+                            
+                            <!-- Post meta content-->
+                            <div class="text-muted fst-italic mb-2">{{article.created_date}} tarihinde "{{article.author}}" tarafindan yazildi.</div>
+                            <hr>
+                            <hr>
+                            {% if article.article_image %}
+                                <img class="img-fluid rounded" src="{{article.article_image.url}}" alt="..." />
+                            
+                            {% endif %}
+                            
+                        </header>
+                        <!-- Post content-->
+                        <section class="mb-5">
+                            <p class="fs-5 mb-4">{{article.content|safe|truncatewords:30}}</p>
+                            <a style="float:100px;" href="{% url 'article:detail' article.id %}" class="btn btn-secondary">Devamini oku</a>
+                            <hr>
+                        </section>
+                    </article>
+                </div>    
+    </div>       
+{% endfor %}
+{% else %}
+<div class="row">
+<div class="col-lg-8">
+<div class="alert alert-danger">
+Makale bulunamadi.
+</div>
+</div>
+</div>
+{% endif %}
+
+{% endblock body %}
+
+{% if articles %}
+
+{% else %}
+{% endif %}
